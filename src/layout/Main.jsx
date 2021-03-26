@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useLayoutEffect, useContext } from 'react'
 import CodeEditor from '../components/CodeEditor'
-import {useGlobalStore} from '../store'
+import { useGlobalStore } from '../store'
 import { SelectedContext } from '../context'
 import useForceUpdate from '../common/useForceUpdate'
 
@@ -25,16 +25,16 @@ export default function Main(props){
         document.querySelector('#' + id)?.classList?.add?.('current');
     }
 
-    const handleTabChange = file => {
+    const handleTabChange = async file => {
         if(file.current) return;
-        dispatch(({type: 'UPDATE_SELECTED', file, selected}))
+        await dispatch(({type: 'UPDATE_SELECTED', file, selected}))
         forceUpdate()
         // rerenderSelectedStyle(selected)
         props?.onRightChange?.(selected)
     }
 
-    const handleTabClose = file => {
-        dispatch(({type: 'CLOSE_FILE', file, selected, setSelected}))
+    const handleTabClose = async file => {
+        await dispatch(({type: 'CLOSE_FILE', file, selected, setSelected}))
         forceUpdate()
         // rerenderSelectedStyle(selected)
         props?.onRightChange?.(selected)

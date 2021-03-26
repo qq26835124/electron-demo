@@ -17,8 +17,9 @@ export default function Node(props){
 
     const {data} = state;
 
-    const openFile = file => {
-        dispatch({type: 'OPEN_FILE', file, selected})
+    const openFile = async file => {
+        await dispatch({type: 'OPEN_FILE', file, selected}) 
+        forceUpdate();
     }
 
     const handleNodeClick = file => {
@@ -32,15 +33,8 @@ export default function Node(props){
             file.type = getFileType(file);
             openFile(file);
             props?.onOpenFile?.({...state})
-            // forceUpdate();
         }
-    }  
-
-    useLayoutEffect(() => {
-        console.log('...useLayoutEffect')
-        forceUpdate();
-        return () => {}
-    }, [selected])
+    }
 
     return (
         <div className='node' style={props.style}>

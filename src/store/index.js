@@ -21,17 +21,13 @@ export function useGlobalStore(){
     const {selected} = useContext(SelectedContext)
 
     const reducer = (state = initialState, action) => {
-        let { file, selected, setSelected } = action
-        state.data = file;
+        let { file, selected } = action
         let index = selected.findIndex(it => it.id == file.id);
         switch (action.type) {
             case actionTypes.SET_DATA: 
                 state.data = file;
-                // state.selected = selected;
-                // setSelected(selected)
                 return state;
             case actionTypes.SET_SELECTED: 
-                // setSelected(selected)
                 return state;
             case actionTypes.OPEN_FILE: 
                 selected.forEach(item => {
@@ -53,8 +49,6 @@ export function useGlobalStore(){
                     }
                     
                 }
-                // state.selected = selected;
-                // setSelected(selected)
                 return state;
             case actionTypes.UPDATE_SELECTED: 
                 selected.forEach(it => {
@@ -65,8 +59,6 @@ export function useGlobalStore(){
                     }
                 })
                 state.data = file;
-                // state.selected = selected;
-                // setSelected(selected)
                 return state;
             case actionTypes.CLOSE_FILE:
                 index >= 0 && selected.splice(index, 1)
@@ -75,11 +67,8 @@ export function useGlobalStore(){
                 });  
                 selected[selected.length - 1] && (selected[selected.length - 1].current = true)
                 state.data = selected[selected.length - 1];
-                // state.selected = selected;
-                // setSelected(selected)
                 return state;
             default:
-                // setSelected([])
                 return state;
         }
     }
