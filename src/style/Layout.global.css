@@ -1,0 +1,63 @@
+.explorer{
+    
+}
+
+.explorer .e-title{
+    padding: 0 25px;
+}
+
+.main{
+    
+}
+
+.main .file-contents{
+    position: absolute;
+    top: 30px;
+    left: 300px;
+    right: 0;
+    bottom: 0;
+}
+
+.file-content .file-tabs{
+    display: flex;
+    background: #2D2D2D;
+    margin: 0;
+    font-size: 14px;
+    padding: 0;
+    position: fixed;
+    left: 300px;
+    right: 0;
+}
+
+.file-tabs .tab{
+    padding: 5px 10px;
+    text-align: center;
+    border-right: 2px solid #252526;
+    cursor: pointer;
+    max-width: 100px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    overflow: hidden;
+    position: relative;
+}
+
+.file-tabs .tab .close{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background: url(../../assets/icons/close.png) no-repeat center;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.file-tabs .tab:hover .close{
+    display: block
+}
+
+.file-tabs .tab.current{
+    background: #2B303B;
+}

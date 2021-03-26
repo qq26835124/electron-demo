@@ -1,0 +1,177 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+body {
+  /* position: relative; */
+  color: white;
+  /* height: 100vh; */
+  /* background: linear-gradient(
+    200.96deg,
+    #fedc2a -29.09%,
+    #dd5789 51.77%,
+    #7a2c9e 129.35%
+  ); */
+  font-family: sans-serif;
+  /* overflow-y: hidden; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+button {
+  background-color: white;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
+  appearance: none;
+  font-size: 1.3rem;
+  box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
+    0px 18px 88px -4px rgba(24, 39, 75, 0.14);
+  transition: transform ease-in 0.1s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+pre{
+  margin: 0;
+}
+
+#root{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+div.code {
+  white-space: pre;
+  outline: none;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto
+}
+div.code.current{
+  display: block;
+}
+.img-box{
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+}
+.img-box.current{
+  display: flex;
+}
+
+.img-box img{
+  max-height: 90%
+}
+
+/* layout */
+.layout {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.layout .aside{
+  /* flex: 10; */
+  width: 300px;
+  height: 100%;
+  overflow-y: auto;
+  background: #252526;
+  padding-bottom: 15px;
+  box-sizing: border-box
+}
+
+.layout .main{
+  flex: 10;
+  height: 100%;
+  overflow-y: auto;
+  background: #2b303b;
+  /* padding: 15px; */
+  box-sizing: border-box
+}
+
+.node{
+  font-size: 14px;
+  padding: 0 15px;
+}
+
+.node-name{
+  padding: 5px 0;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%
+}
+
+.node-name .text{
+  flex: 10;
+  padding: 0 5px;
+}
+
+.node-name:hover .text{
+  background-color: yellow !important;
+  color: #333 !important;
+}
+
+.node-name.selected .text{
+  background-color: #56534b;
+  color: #fff;
+}
+
+.node-name.current .text{
+  background-color: burlywood;
+}
+
+.icon {
+  font-size: 0;
+}
+
+.node-name .icon{
+  transition: transform .3s;
+  width: 14px;
+  min-width: 14px;
+  font-size: 0;
+  display: flex;
+  align-items: center
+}
+.node-name .icon.icon-dir{
+  transform: rotate(-90deg);
+}
+
+.node-name.open .icon.icon-dir{
+  transform: rotate(0)
+}
+
+.icon img{
+  width: 100%;
+  vertical-align:middle
+}
+
+.node-name .text{
+  /* margin-left: 5px */
+}

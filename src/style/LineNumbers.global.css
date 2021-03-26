@@ -1,0 +1,27 @@
+.hljs{
+    padding: 15px !important;
+    word-break: break-all;
+    word-break: break-word;
+    box-sizing: border-box
+}
+.hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    text-align: right;
+    color: #6d6d6d;
+    /* border-right: 1px solid #CCC; */
+    vertical-align: top;
+    padding-right: 5px;
+
+    /* your custom style here */
+}
+
+/* for block of code */
+.hljs-ln-code {
+    padding-left: 8px !important;
+}
