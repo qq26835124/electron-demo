@@ -7,7 +7,7 @@ import useForceUpdate from '../common/useForceUpdate'
 export default function Main(props){
 
     const reducer = useGlobalStore();
-    const { selected, setSelected } = useContext(SelectedContext);
+    const { selected } = useContext(SelectedContext);
 
     const [state, dispatch] = useReducer(reducer, {...props})
     const forceUpdate = useForceUpdate();
@@ -34,7 +34,7 @@ export default function Main(props){
     }
 
     const handleTabClose = async file => {
-        await dispatch(({type: 'CLOSE_FILE', file, selected, setSelected}))
+        await dispatch(({type: 'CLOSE_FILE', file, selected}))
         forceUpdate()
         // rerenderSelectedStyle(selected)
         props?.onRightChange?.(selected)

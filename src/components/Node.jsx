@@ -36,6 +36,11 @@ export default function Node(props){
         }
     }
 
+    useLayoutEffect(() => {
+        console.log('...useLayoutEffect')
+        forceUpdate()
+    }, [selected])
+
     return (
         <div className='node' style={props.style}>
             <div id={`node-name-${data.id}`} 

@@ -54,7 +54,8 @@
     cursor: pointer;
 }
 
-.file-tabs .tab:hover .close{
+.file-tabs .tab:hover .close,
+.file-tabs .tab.current .close{
     display: block
 }
 
