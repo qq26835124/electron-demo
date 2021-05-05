@@ -1,8 +1,8 @@
 import React, { useLayoutEffect } from 'react'
 import Node from '../components/Node'
+import { useStore } from '../store'
 
 export default function Navigation(props){
-
     return (
         <div className="navigation">
             <div className="tools">

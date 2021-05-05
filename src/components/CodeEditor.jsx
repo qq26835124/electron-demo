@@ -32,7 +32,6 @@ const init = (ref, opts, props, callback) => {
 export default function CodeEditor(props){
     const container = useRef();
     const { uid, content, className, current, style } = props
-    const [ isChange, setIsChange ] = useState(false);
     useLayoutEffect(() => {
         // 非图片文本内容才加载编辑器
         if(className != 'img'){
@@ -41,11 +40,9 @@ export default function CodeEditor(props){
                 language: className
             }, props, value => {
                 if(props.content == value){
-                    setIsChange(false)
-                    document.querySelector('.tab-' + uid).classList.remove('is-change')
+                    props?.setIsChange?.(false, uid)
                 }else{
-                    setIsChange(true)
-                    document.querySelector('.tab-' + uid).classList.add('is-change')
+                    props?.setIsChange?.(true, uid)
                 }
             });
             (() => {
@@ -57,7 +54,7 @@ export default function CodeEditor(props){
         <>
             {className == 'img' 
                 ? <div className={['img-box',current ? 'current' : ''].join(' ')}><img src={content} alt={content}/></div> 
-                : <div ref={container} id={`code-${uid}`} className={['code',current ? 'current' : '', isChange ? 'is-change' : ''].join(' ')} style={style}></div>
+                : <div ref={container} id={`code-${uid}`} className={['code',current ? 'current' : ''].join(' ')} style={style}></div>
             }
         </>
     )

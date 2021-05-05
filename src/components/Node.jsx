@@ -1,22 +1,16 @@
 import React, { useState, useReducer, useLayoutEffect, useContext } from 'react'
 import { getFileType } from '../common/getFileType'
 import useForceUpdate from '../common/useForceUpdate'
-import { useGlobalStore } from '../store'
-import { SelectedContext } from '../context'
+import { useStore } from '../store'
 import Fa from 'react-fontawesome'
 
 export default function Node(props){
-    const reducer = useGlobalStore();
     const [isOpen, setIsOpen] = useState(false);
     const [show, setShow] = useState(true)
     const forceUpdate = useForceUpdate();
-    const { selected } = useContext(SelectedContext);
-    
-    const [state, dispatch] = useReducer(reducer, {
-        ...props
-    })
-
-    const {data} = state;
+    const [state, dispatch] = useStore()
+    const { data } = props
+    const { selected } = state
 
     const openFile = async file => {
         await dispatch({type: 'OPEN_FILE', file, selected}) 
@@ -33,20 +27,14 @@ export default function Node(props){
         }else{
             file.type = getFileType(file);
             openFile(file);
-            props?.onOpenFile?.({...state})
         }
     }
-
-    useLayoutEffect(() => {
-        console.log('...useLayoutEffect')
-        forceUpdate()
-    }, [selected])
 
     return (
         <div className='node' style={props.style}>
             <div id={`node-name-${data.id}`} 
-                className={['node-name',isOpen ? 'open' : '',`level_${data.level}`, data.current ? 'current' : '', selected.findIndex(item => item.id == data.id) >= 0 ? 'selected' : ''].join(' ')} 
-                style={{cursor: 'pointer', paddingLeft: data.level * 10 + 'px'}} 
+                className={['node-name',isOpen ? 'open' : '',`level_${data.level}`, data.current ? 'current' : '', selected && selected.findIndex(item => item.id == data.id) >= 0 ? 'selected' : ''].join(' ')} 
+                style={{cursor: 'pointer', paddingLeft: data.level * 5 + 'px'}} 
                 onClick={handleNodeClick.bind(this,data)}>
                     <span className={['icon',`icon-${getFileType(data)}`].join(' ')}><img src={`../assets/node/file-${getFileType(data)}.png`}/></span>
                     <span className='text'>{data.name}</span>
