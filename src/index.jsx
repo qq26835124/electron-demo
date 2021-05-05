@@ -1,10 +1,8 @@
 import React from 'react'
-import { render } from 'react-dom'
+import { render, unmountComponentAtNode } from 'react-dom'
 import App from './App'
 import { ipcRenderer } from 'electron'
 import fs from 'fs'
-const rootPath = '/Users/jiangyichun/Documents'
-const rootName = 'Documents'
 
 const transData = (node, cb) => {
     if(!node.level || !node.id) return
@@ -43,23 +41,51 @@ const transData = (node, cb) => {
     return node;
 }
 
-let node = {
-    path: rootPath,
-    name: rootName,
-    id: 1,
-    level: 1,
-    children: [],
-    isDir: fs.statSync(rootPath) && fs.statSync(rootPath).isDirectory() || false,
-    isOpen: false,
-    current: false
+/**
+ * 初始化目录
+ * @param {读取的文件路径} filePath 
+ */
+const initDir = filePath => {
+    if(!filePath) return;
+    const rootPath = filePath;
+    const rootName = filePath.substring(filePath.lastIndexOf('/') + 1, filePath.length);
+    let node = {
+        isRoot: true,
+        path: rootPath,
+        name: rootName,
+        id: 1,
+        level: 1,
+        children: [],
+        isDir: fs.statSync(rootPath) && fs.statSync(rootPath).isDirectory() || false,
+        isOpen: false,
+        current: false
+    }
+    transData(node, data => {
+        console.log('data:',data)
+        // 先卸载根节点
+        unmountComponentAtNode(document.getElementById('root'))
+        render(
+            <App data={data} isOpen={node.isOpen}/>, document.getElementById('root')
+        )
+    })
 }
 
-transData(node, data => {
-    console.log('data:',data)
-    render(
-        <App data={data} isOpen={node.isOpen}/>, document.getElementById('root')
-    )
-})
+const onOpen = () => {
+    console.log('onOpen')
+    ipcRenderer.send('openDialog')
+}
 
 // 在渲染进程中
-ipcRenderer.invoke('main-action', 'textContent')
+ipcRenderer.invoke('main-action')
+
+// 打开文件
+ipcRenderer.on('selected-files', (event, files) => {
+    console.log('ffiles:',files)
+    initDir(files.filePaths[0])
+})
+
+render(
+    <App onOpen={onOpen}/>,
+    document.getElementById('root')
+)
+

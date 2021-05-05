@@ -4,9 +4,9 @@ export const getFileType = file => {
         return 'dir'
     }else{
         if(/\.js$/.test(file.name)){
-            return 'js'
+            return 'javascript'
         }else if(/\.ts$/.test(file.name)){
-            return 'ts'
+            return 'typescript'
         }else if(/\.jsx|\.tsx$/.test(file.name)){
             return 'react'
         }else if(/\.html$/.test(file.name)){

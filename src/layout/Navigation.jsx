@@ -1,11 +1,13 @@
 import React, { useLayoutEffect } from 'react'
 import Node from '../components/Node'
 
-export default function Aside(props){
+export default function Navigation(props){
 
     return (
-        <div className="aside">
-            {/* <h1>electron-react-boilerplate</h1> */}
+        <div className="navigation">
+            <div className="tools">
+                
+            </div>
             <div className="explorer">
                 <p className="e-title">EXPLORER</p>
                 <Node {...props}/>

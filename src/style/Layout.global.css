@@ -1,5 +1,7 @@
 .explorer{
-    
+    flex: 20;
+    overflow-x: auto;
+    padding-bottom: 15px;
 }
 
 .explorer .e-title{
@@ -30,7 +32,7 @@
 }
 
 .file-tabs .tab{
-    padding: 5px 10px;
+    padding: 5px 20px;
     text-align: center;
     border-right: 2px solid #252526;
     cursor: pointer;
@@ -47,8 +49,8 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     background: url(../../assets/icons/close.png) no-repeat center;
     background-size: 100%;
     cursor: pointer;
@@ -60,5 +62,19 @@
 }
 
 .file-tabs .tab.current{
-    background: #2B303B;
+    background: #1E1E1E;
+}
+.file-tabs .tab.is-change{
+    position: relative;
+}
+.file-tabs .tab.is-change:after{
+    display: block;
+    position: absolute;
+    content: "*";
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+    text-align: center;
+    bottom: 0;
+    right: 0;
 }

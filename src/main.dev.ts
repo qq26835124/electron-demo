@@ -11,7 +11,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -132,8 +132,18 @@ app.on('activate', () => {
 });
 
 // 在主进程中
-ipcMain.handle('main-action', (evidence, ...args) => {
-  console.log('evidence:',evidence)
-  console.log(args[0])
-  console.log(args[1])
+ipcMain.handle('main-action', event => {
+  mainWindow.on('selected-files', files => {
+    event.sender.send('selected-files', files);
+  })
 })
+
+ipcMain.on('openDialog', event => {
+  dialog.showOpenDialog({
+    properties: ['openFile', 'openDirectory']
+  }).then(files => {
+    files && event.sender.send('selected-files', files)
+  })
+})
+
+

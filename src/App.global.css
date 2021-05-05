@@ -60,6 +60,7 @@ pre{
   top: 0;
   right: 0;
   bottom: 0;
+  background: #242424;
 }
 
 div.code {
@@ -97,14 +98,21 @@ div.code.current{
   height: 100%;
 }
 
-.layout .aside{
+.layout .navigation{
   /* flex: 10; */
   width: 300px;
   height: 100%;
   overflow-y: auto;
   background: #252526;
-  padding-bottom: 15px;
+  /* padding-bottom: 15px; */
+  display: flex;
   box-sizing: border-box
+}
+
+.layout .navigation .tools{
+  width: 50px;
+  height: 100%;
+  background: #333;
 }
 
 .layout .main{
@@ -125,7 +133,22 @@ div.code.current{
   padding: 5px 0;
   display: flex;
   justify-content: flex-start;
-  width: 100%
+  width: 100%;
+  position: relative;
+}
+
+.node-name .actions{
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.node-name .actions>span{
+  margin: 0 5px;
+}
+.node-name .actions .newDir{
+  font-size: 16px;
 }
 
 .node-name .text{
@@ -133,17 +156,17 @@ div.code.current{
   padding: 0 5px;
 }
 
-.node-name:hover .text{
-  background-color: yellow !important;
-  color: #333 !important;
+.node-name:hover{
+  background-color: #333 !important;
+  color: #fff !important;
 }
 
-.node-name.selected .text{
+.node-name.selected{
   background-color: #56534b;
   color: #fff;
 }
 
-.node-name.current .text{
+.node-name.current{
   background-color: burlywood;
 }
 
@@ -174,4 +197,26 @@ div.code.current{
 
 .node-name .text{
   /* margin-left: 5px */
+}
+
+.open-file-or-dir{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #999;
+}
+.open-file-or-dir-wrap{
+  display: flex;
+  justify-content: center;
+}
+.open-file-or-dir svg{
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.open-file-or-dir .open-file{
+  cursor: pointer;
+  margin-left: 10px;
 }

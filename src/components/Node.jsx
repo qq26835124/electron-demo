@@ -3,6 +3,7 @@ import { getFileType } from '../common/getFileType'
 import useForceUpdate from '../common/useForceUpdate'
 import { useGlobalStore } from '../store'
 import { SelectedContext } from '../context'
+import Fa from 'react-fontawesome'
 
 export default function Node(props){
     const reducer = useGlobalStore();
@@ -44,11 +45,15 @@ export default function Node(props){
     return (
         <div className='node' style={props.style}>
             <div id={`node-name-${data.id}`} 
-                className={['node-name',data.isOpen ? 'open' : '',`level_${data.level}`, data.current ? 'current' : '', selected.findIndex(item => item.id == data.id) >= 0 ? 'selected' : ''].join(' ')} 
+                className={['node-name',isOpen ? 'open' : '',`level_${data.level}`, data.current ? 'current' : '', selected.findIndex(item => item.id == data.id) >= 0 ? 'selected' : ''].join(' ')} 
                 style={{cursor: 'pointer', paddingLeft: data.level * 10 + 'px'}} 
                 onClick={handleNodeClick.bind(this,data)}>
                     <span className={['icon',`icon-${getFileType(data)}`].join(' ')}><img src={`../assets/node/file-${getFileType(data)}.png`}/></span>
                     <span className='text'>{data.name}</span>
+                {data.isRoot ? <div className="actions">
+                    <span className="newFile" title='新建文件'><Fa name='file-o'></Fa></span>
+                    <span className="newDir" title="新建目录"><Fa name='folder-o'></Fa></span>
+                </div> : null}
             </div>
             {show ? null : data.isDir && data.children.map(file => {
                 return <Node data={file || {}} style={{display: isOpen ? 'block' : 'none'}} key={file.id} onOpenFile={state.onOpenFile}/>

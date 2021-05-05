@@ -45,12 +45,12 @@ export default function Main(props){
             <div className="file-content">
                 <ul className="file-tabs">
                     {selected ? selected.map(item => {
-                        return <li key={item.id} className={['tab', item.current ? 'current' : ''].join(' ')} title={item.path} onClick={handleTabChange.bind(this,item)}><span>{item.name}</span><span className="close" onClick={handleTabClose.bind(this,item)}></span></li>
+                        return <li key={item.id} uid={item.id} className={['tab', item.current ? 'current' : '', 'tab-' + item.id].join(' ')} title={item.path} onClick={handleTabChange.bind(this,item)}><span>{item.name}</span><span className="close" onClick={handleTabClose.bind(this,item)}></span></li>
                     }) : null}
                 </ul>
                 <div className="file-contents">
                     {selected ? selected.map(item => {
-                        return <CodeEditor key={item.id} className={item.type} content={item.content} current={item.current}></CodeEditor>
+                        return <CodeEditor key={item.id} uid={item.id} className={item.type} content={item.content} current={item.current}></CodeEditor>
                     }) : null}
                 </div>
             </div>

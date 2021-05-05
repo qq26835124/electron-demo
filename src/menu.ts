@@ -3,6 +3,7 @@ import {
   Menu,
   shell,
   BrowserWindow,
+  dialog,
   MenuItemConstructorOptions,
 } from 'electron';
 
@@ -84,6 +85,25 @@ export default class MenuBuilder {
         },
       ],
     };
+    const subMenuFile: DarwinMenuItemConstructorOptions = {
+      label: 'File',
+      submenu: [
+        { label: 'New File' ,accelerator: 'Command+N', selector: 'newFile:', 
+          click: () => {
+            console.log('点击了File')
+          }
+        },
+        { label: 'Open...' ,accelerator: 'Command+O', selector: 'open:',
+          click: () => {
+            dialog.showOpenDialog({
+              properties: ['openFile', 'openDirectory']
+            }).then(files => {
+              files && this.mainWindow.emit('selected-files', files)
+            })
+          }
+        }
+      ]
+    }
     const subMenuEdit: DarwinMenuItemConstructorOptions = {
       label: 'Edit',
       submenu: [
@@ -189,7 +209,7 @@ export default class MenuBuilder {
         ? subMenuViewDev
         : subMenuViewProd;
 
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+    return [subMenuAbout, subMenuFile, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
   }
 
   buildDefaultTemplate() {
