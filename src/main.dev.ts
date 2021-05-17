@@ -1,19 +1,11 @@
-/* eslint global-require: off, no-console: off */
 
-/**
- * This module executes inside of electron's main process. You can start
- * electron renderer process from here and communicate with the other processes
- * through IPC.
- *
- * When running `yarn build` or `yarn build-main`, this file is compiled to
- * `./src/main.prod.js` using webpack. This gives us some performance wins.
- */
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { MainService } from './main-services'
 import MenuBuilder from './menu';
 
 export default class AppUpdater {
@@ -74,6 +66,7 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true
     },
   });
 
@@ -97,27 +90,26 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
+  const mainService = new MainService(dialog, mainWindow);
+  const menuBuilder = new MenuBuilder(mainWindow, mainService);
   menuBuilder.buildMenu();
 
-  // Open urls in the user's browser
+  // 在浏览器中打开url
   mainWindow.webContents.on('new-window', (event, url) => {
     event.preventDefault();
     shell.openExternal(url);
   });
 
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
+  // 使用自动更新
   new AppUpdater();
 };
 
 /**
- * Add event listeners...
+ * 添加事件...
  */
 
 app.on('window-all-closed', () => {
-  // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
+  // 所有窗口关闭后退出应用
   if (process.platform !== 'darwin') {
     app.quit();
   }
@@ -126,8 +118,7 @@ app.on('window-all-closed', () => {
 app.whenReady().then(createWindow).catch(console.log);
 
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
+  // 激活应用时如果主窗口为null则新建
   if (mainWindow === null) createWindow();
 });
 
@@ -136,13 +127,8 @@ ipcMain.handle('main-action', event => {
   mainWindow.on('selected-files', files => {
     event.sender.send('selected-files', files);
   })
-})
-
-ipcMain.on('openDialog', event => {
-  dialog.showOpenDialog({
-    properties: ['openFile', 'openDirectory']
-  }).then(files => {
-    files && event.sender.send('selected-files', files)
+  mainWindow.on('doSaveFile', () => {
+    event.sender.send('doSaveFile');
   })
 })
 

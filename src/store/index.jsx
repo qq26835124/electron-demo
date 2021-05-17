@@ -2,15 +2,19 @@ import React, { createContext, useContext, useReducer } from 'react'
 import fs from 'fs'
 
 const actionTypes = {
+    SET_CUR_CHILDREN: 'SET_CUR_CHILDREN',
     INIT_DATA: 'INIT_DATA',
-    OPEN_FILE: 'OPEN_FILE',
+    EDIT_FILE: 'EDIT_FILE',
     UPDATE_SELECTED: 'UPDATE_SELECTED',
     SET_SELECTED: 'SET_SELECTED',
     CLOSE_FILE: 'CLOSE_FILE',
-    SET_ISCHANGE: 'SET_ISCHANGE'
+    SET_ISCHANGE: 'SET_ISCHANGE',
+    NEW_FILE: 'NEW_FILE',
+    SAVE_FILE: 'SAVE_FILE',
+    TORENAME: 'TORENAME',
+    RENAME: 'RENAME',
+    DEL_FILE: 'DEL_FILE'
 }
-
-// export let selected = []
 
 export const initialState = {
     data: null,
@@ -18,71 +22,79 @@ export const initialState = {
 }
 
 export function reducer(state = initialState, action){
-    let { file, selected } = action
-    let index = selected.findIndex(it => it.id == file.id);
-    switch (action.type) {
+    const { type, payload, renderService } = action
+    switch (type) {
+        case actionTypes.SET_CUR_CHILDREN:
+            return Object.assign({}, state)
         case actionTypes.INIT_DATA: 
-            return {
-                data: file,
-                selected
-            };
+            return Object.assign({}, state)
         case actionTypes.SET_SELECTED: 
-            return state;
-        case actionTypes.OPEN_FILE: 
-            selected.forEach(item => {
-                item.current = false;
-            }); 
-            file.current = true;
-            if(file.type == 'img'){
-                file.content = file.path;
-                index < 0 && selected.push(file);
-                state.data = file;
-            }else{
-                try {
-                    const data = fs.readFileSync(file.path, 'utf-8') || '';
-                    file.content = data;
-                    index < 0 && selected.push(file); 
-                } catch (error) {
-                    console.log('读取文件失败')
-                }
-                
+            return Object.assign({}, state)
+        case actionTypes.EDIT_FILE: 
+            {
+                const { file, selected } = renderService.editFile(payload)
+                return Object.assign({}, state, {
+                    data: file,
+                    selected
+                })
             }
-            return {
-                data: file,
-                selected
-            };
         case actionTypes.UPDATE_SELECTED: 
-            selected.forEach(it => {
-                if(it.id == file.id){
-                    it.current = true;
-                }else{
-                    it.current = false;
-                }
-            })
-            return {
-                data: file,
-                selected
-            };
+            {
+                const { file, selected } = renderService.updateSelected(payload)
+                return Object.assign({}, state, {
+                    data: file,
+                    selected
+                })
+            }
         case actionTypes.CLOSE_FILE:
-            index >= 0 && selected.splice(index, 1)
-            selected.forEach(item => {
-                item.current = false;
-            });  
-            selected[selected.length - 1] && (selected[selected.length - 1].current = true)
-            return {
-                data: selected[selected.length - 1],
-                selected
-            };
+            {
+                const { file, selected } = renderService.closeFile(payload)
+                return Object.assign({}, state, {
+                    data: file,
+                    selected
+                })
+            }
         case actionTypes.SET_ISCHANGE: 
-            const { isChange, id } = action
-            selected.forEach(item => {
-                if(item.id == id){
-                    item.isChange = isChange
-                }
-            })
-            return {
-                data: file,
-                selected
+            {
+                const { file, selected } = renderService.setIsChange(payload)
+                return Object.assign({}, state, {
+                    data: file,
+                    selected
+                })
+            }
+        case actionTypes.NEW_FILE:
+            {
+                const { file, selected } = renderService.newFile(payload)
+                return Object.assign({}, state, {
+                    data: file,
+                    selected
+                })
+            }
+        case actionTypes.SAVE_FILE:
+            {
+                const { file, selected } = renderService.saveFile(payload)
+                return Object.assign({}, state, {
+                    data: file,
+                    selected
+                })
+            }
+        case actionTypes.TORENAME:
+            return Object.assign({}, state, payload)
+        case actionTypes.RENAME:
+            {
+                const { file, selected } = renderService.rename(payload)
+                return Object.assign({}, state, {
+                    data: file,
+                    selected
+                })
+            }
+        case actionTypes.DEL_FILE:
+            {
+                const { file, selected } = renderService.delFile(payload)
+                return Object.assign({}, state, {
+                    data: file,
+                    selected
+                })
             }
         default:
             return state;

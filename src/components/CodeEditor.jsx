@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useReducer, useRef, useState } from 'react'
-import * as monaco from 'monaco-editor'
+// import * as monaco from 'monaco-editor'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
 
 /**
  * 编辑器默认配置
@@ -8,6 +9,7 @@ let defaultOpts = {
     value: '',
     theme: 'vs-dark',
     roundedSelection: false,
+    autoSize: true,
     autoIndent: true
 }
 
@@ -22,7 +24,6 @@ const init = (ref, opts, props, callback) => {
     const model=monaco.editor.createModel(defaultOpts.value, defaultOpts.language);
     let monacoEditor = monaco.editor.create(ref.current, {...defaultOpts, model})
     model.onDidChangeContent(() => {
-        // console.log('monacoEditor->value:', monacoEditor.getValue())
         let value = monacoEditor.getValue() 
         callback?.(value)
     })
@@ -35,14 +36,14 @@ export default function CodeEditor(props){
     useLayoutEffect(() => {
         // 非图片文本内容才加载编辑器
         if(className != 'img'){
-            const model = init(container, {
+            let model = init(container, {
                 value: content,
                 language: className
             }, props, value => {
-                if(props.content == value){
-                    props?.setIsChange?.(false, uid)
+                if(props.oldContent == value){
+                    props?.setIsChange?.(uid, value, content)
                 }else{
-                    props?.setIsChange?.(true, uid)
+                    props?.setIsChange?.(uid, value, content)
                 }
             });
             (() => {

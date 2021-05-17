@@ -3,7 +3,6 @@ import {
   Menu,
   shell,
   BrowserWindow,
-  dialog,
   MenuItemConstructorOptions,
 } from 'electron';
 
@@ -15,8 +14,9 @@ interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
 
-  constructor(mainWindow: BrowserWindow) {
+  constructor(mainWindow: BrowserWindow, mainService) {
     this.mainWindow = mainWindow;
+    this.mainService = mainService;
   }
 
   buildMenu(): Menu {
@@ -90,16 +90,12 @@ export default class MenuBuilder {
       submenu: [
         { label: 'New File' ,accelerator: 'Command+N', selector: 'newFile:', 
           click: () => {
-            console.log('点击了File')
+            this.mainService.newFile()
           }
         },
         { label: 'Open...' ,accelerator: 'Command+O', selector: 'open:',
           click: () => {
-            dialog.showOpenDialog({
-              properties: ['openFile', 'openDirectory']
-            }).then(files => {
-              files && this.mainWindow.emit('selected-files', files)
-            })
+            this.mainService.openFile()
           }
         }
       ]
@@ -109,6 +105,11 @@ export default class MenuBuilder {
       submenu: [
         { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
         { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
+        { label: 'Save', accelerator: 'Command+S', selector: 'save:', 
+          click: () => {
+            this.mainService.saveFile()
+          }
+        },
         { type: 'separator' },
         { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
         { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
@@ -218,8 +219,18 @@ export default class MenuBuilder {
         label: '&File',
         submenu: [
           {
+            label: '&New File',
+            accelerator: 'Ctrl+N',
+            click: () => {
+              this.mainService.newFile()
+            }
+          },
+          {
             label: '&Open',
             accelerator: 'Ctrl+O',
+            click: () => {
+              this.mainService.openFile()
+            }
           },
           {
             label: '&Close',
@@ -229,6 +240,18 @@ export default class MenuBuilder {
             },
           },
         ],
+      },
+      {
+        label: '&Edit',
+        submenu: [
+          {
+            label: '&Save',
+            accelerator: 'Ctrl+S',
+            click: () => {
+              this.mainService.saveFile()
+            }
+          }
+        ]
       },
       {
         label: '&View',
