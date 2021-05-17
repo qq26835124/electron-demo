@@ -1,15 +1,19 @@
+## 安装依赖
+```bash
+yarn add 
+```
+或者
+```bash
+npm install
+```
 
-## Starting Development
-
-Start the app in the `dev` environment:
+## 本地启动
 
 ```bash
 yarn start
 ```
 
-## Packaging for Production
-
-To package apps for the local platform:
+## 打包
 
 ```bash
 yarn package
