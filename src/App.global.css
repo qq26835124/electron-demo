@@ -1,22 +1,8 @@
-/*
- * @NOTE: Prepend a `~` to css file paths that are in your node_modules
- *        See https://github.com/webpack-contrib/sass-loader#imports
- */
+
 body {
   /* position: relative; */
   color: white;
-  /* height: 100vh; */
-  /* background: linear-gradient(
-    200.96deg,
-    #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35%
-  ); */
   font-family: sans-serif;
-  /* overflow-y: hidden; */
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
 }
 
 button {
@@ -63,6 +49,22 @@ pre{
   background: #242424;
 }
 
+.logo{
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  font-size: 0;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background: #a58686;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.logo img{
+  width: 80%;
+}
+
 div.code {
   white-space: pre;
   outline: none;
@@ -106,13 +108,25 @@ div.code.current{
   background: #252526;
   /* padding-bottom: 15px; */
   display: flex;
-  box-sizing: border-box
+  box-sizing: border-box;
+  position: relative;
 }
 
 .layout .navigation .tools{
   width: 50px;
   height: 100%;
   background: #333;
+}
+
+.layout .navigation .resize-handle{
+  width: 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: blue;
+  opacity: 0;
+  cursor: url(../assets/icons/resize.ico) 14 14, auto;
 }
 
 .layout .main{
@@ -147,13 +161,14 @@ div.code.current{
 .node-name .actions>span{
   margin: 0 5px;
 }
-.node-name .actions .newDir{
-  font-size: 16px;
+
+.node-name .actions>span svg{
+  margin-top: 3px
 }
 
 .node-name .text{
   flex: 10;
-  padding: 0 5px;
+  padding: 1px 5px 0 5px;
 }
 
 .node-name:hover{
@@ -168,6 +183,10 @@ div.code.current{
 
 .node-name.current{
   background-color: burlywood;
+}
+
+.node-name.current-dir{
+  background: blueviolet
 }
 
 .icon {
@@ -193,10 +212,6 @@ div.code.current{
 .icon img{
   width: 100%;
   vertical-align:middle
-}
-
-.node-name .text{
-  /* margin-left: 5px */
 }
 
 .open-file-or-dir{

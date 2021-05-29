@@ -34,20 +34,7 @@ class RenderService{
             label: '新建文件',
             click: e => {
                 console.log('新建文件:',this.menuData)
-                const name = ''
-                let node = {
-                    isRoot: false,
-                    path: this.menuData.path + name,
-                    name,
-                    id: `${this.menuData.level + 1}_${this.menuData.children.length}`,
-                    level: `${this.menuData.level + 1}`,
-                    children: [],
-                    isDir: false,
-                    isOpen: false,
-                    current: false,
-                    contentEditable: true
-                }
-                callback && callback(this.menuData, node, 'newFile')
+                this.doNewFileOrDir(this.menuData, 'newFile', callback)
             }
         },
         {
@@ -55,20 +42,7 @@ class RenderService{
             label: '新建文件夹',
             click: e => {
                 console.log('新建文件夹:',this.menuData)
-                const name = ''
-                let node = {
-                    isRoot: false,
-                    path: this.menuData.path + name,
-                    name,
-                    id: `${this.menuData.level + 1}_${this.menuData.children.length}`,
-                    level: `${this.menuData.level + 1}`,
-                    children: [],
-                    isDir: true,
-                    isOpen: false,
-                    current: false,
-                    contentEditable: true
-                }
-                callback && callback(this.menuData, node, 'newDir')
+                this.doNewFileOrDir(this.menuData, 'newDir', callback)
             }
         },
         {
@@ -88,6 +62,27 @@ class RenderService{
             }
         }
         ]
+    }
+
+    /**
+     * 新建文件或文件夹具体逻辑
+     * @param {Object} data 
+     */
+    doNewFileOrDir(data, type, callback){
+        const name = ''
+        let node = {
+            isRoot: false,
+            path: data.path + name,
+            name,
+            id: `${data.level + 1}_${data.children.length}`,
+            level: `${data.level + 1}`,
+            children: [],
+            isDir: type == 'newDir' ? true : false,
+            isOpen: false,
+            current: false,
+            contentEditable: true
+        }
+        callback && callback(data, node, type)
     }
 
     /**

@@ -10,7 +10,8 @@ let defaultOpts = {
     theme: 'vs-dark',
     roundedSelection: false,
     autoSize: true,
-    autoIndent: true
+    autoIndent: true,
+    automaticLayout: true
 }
 
 /**
@@ -33,10 +34,11 @@ const init = (ref, opts, props, callback) => {
 export default function CodeEditor(props){
     const container = useRef();
     const { uid, content, className, current, style } = props
+    let model;
     useLayoutEffect(() => {
         // 非图片文本内容才加载编辑器
         if(className != 'img'){
-            let model = init(container, {
+            model = init(container, {
                 value: content,
                 language: className
             }, props, value => {
@@ -46,16 +48,16 @@ export default function CodeEditor(props){
                     props?.setIsChange?.(uid, value, content)
                 }
             });
-            (() => {
-                return model.dispose();
-            })
+            return () => {
+                model.dispose();
+            };
         }
     }, [])
     return (
         <>
             {className == 'img' 
                 ? <div className={['img-box',current ? 'current' : ''].join(' ')}><img src={content} alt={content}/></div> 
-                : <div ref={container} id={`code-${uid}`} className={['code',current ? 'current' : ''].join(' ')} style={style}></div>
+                : <div ref={container} id={`code-${uid}`} className={['code',current ? 'current' : ''].join(' ')}></div>
             }
         </>
     )

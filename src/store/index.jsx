@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer } from 'react'
 import fs from 'fs'
 
 const actionTypes = {
+    SET_CUR_DIR: 'SET_CUR_DIR',
     SET_CUR_CHILDREN: 'SET_CUR_CHILDREN',
     INIT_DATA: 'INIT_DATA',
     EDIT_FILE: 'EDIT_FILE',
@@ -17,6 +18,7 @@ const actionTypes = {
 }
 
 export const initialState = {
+    currentDir: null,
     data: null,
     selected: []
 }
@@ -24,6 +26,11 @@ export const initialState = {
 export function reducer(state = initialState, action){
     const { type, payload, renderService } = action
     switch (type) {
+        case actionTypes.SET_CUR_DIR:
+            const { file } = payload
+            return Object.assign({}, state, {
+                currentDir: file
+            })
         case actionTypes.SET_CUR_CHILDREN:
             return Object.assign({}, state)
         case actionTypes.INIT_DATA: 
