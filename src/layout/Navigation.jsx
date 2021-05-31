@@ -28,6 +28,7 @@ export default function Navigation(props){
         document.onmousemove = mouseMove;
         document.onmouseup = mouseUp;
     }
+
     useLayoutEffect(() => {
         let naviWidth = localStorage.getItem('naviWidth')
         if(naviWidth){
@@ -41,6 +42,7 @@ export default function Navigation(props){
             resizeHandle.removeEventListener('mousedown', mouseDown, false)
         };
     }, [])
+    
     return (
         <div className="navigation" ref={ref}>
             <div className="tools">

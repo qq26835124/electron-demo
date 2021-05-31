@@ -35,6 +35,7 @@ export default function CodeEditor(props){
     const container = useRef();
     const { uid, content, className, current, style } = props
     let model;
+
     useLayoutEffect(() => {
         // 非图片文本内容才加载编辑器
         if(className != 'img'){
@@ -53,6 +54,7 @@ export default function CodeEditor(props){
             };
         }
     }, [])
+    
     return (
         <>
             {className == 'img' 

@@ -16,7 +16,6 @@ export default function Node(props){
 
     const editFile = async file => {
         await dispatch({type: 'EDIT_FILE', payload: { file, selected }, renderService}) 
-        // forceUpdate();
     }
 
     const handleNodeClick = file => {
