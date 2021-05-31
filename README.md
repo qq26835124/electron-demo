@@ -1,6 +1,6 @@
 ## 安装依赖
 ```bash
-yarn add 
+yarn 
 ```
 或者
 ```bash
