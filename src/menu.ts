@@ -179,7 +179,7 @@ export default class MenuBuilder {
           },
         },
         {
-          label: '关于作者',
+          label: '关于',
           click: () => {
             this.mainService.about()
           }
@@ -294,7 +294,7 @@ export default class MenuBuilder {
             },
           },
           {
-            label: '关于作者',
+            label: '关于',
             click: () => {
               this.mainService.about()
             }
