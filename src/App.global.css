@@ -246,6 +246,12 @@ div.code.current{
 .open-file-or-dir-wrap{
   display: flex;
   justify-content: center;
+  padding: 60px 100px;
+  border-radius: 4px;
+  cursor: pointer
+}
+.open-file-or-dir-wrap:hover{
+  background: rgba(255,255,255,.1);
 }
 .open-file-or-dir svg{
   width: 30px;
