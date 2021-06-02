@@ -41,23 +41,23 @@ pre{
 }
 
 /*修改滚动条样式*/
-div::-webkit-scrollbar{
-  width:10px;
-  height:10px;
+::-webkit-scrollbar{
+  width:6px;
+  height:6px;
   /**/
 }
-div::-webkit-scrollbar-track{
+::-webkit-scrollbar-track{
   background: #252526;
   /* border-radius:2px; */
 }
-div::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb{
   background: #464647;
   /* border-radius:10px; */
 }
-div::-webkit-scrollbar-thumb:hover{
+::-webkit-scrollbar-thumb:hover{
   background: #333;
 }
-div::-webkit-scrollbar-corner{
+::-webkit-scrollbar-corner{
   background: #252526;
 }
 
@@ -161,7 +161,7 @@ div.code.current{
 
 .node{
   font-size: 14px;
-  padding: 0 15px;
+  /* padding: 0 15px; */
 }
 
 .node-name{
@@ -170,6 +170,7 @@ div.code.current{
   justify-content: flex-start;
   width: 100%;
   position: relative;
+  box-sizing: border-box
 }
 
 .node-name .actions{
@@ -207,7 +208,7 @@ div.code.current{
 }
 
 .node-name.current-dir{
-  background: blueviolet
+  background: #482b63
 }
 
 .icon {
