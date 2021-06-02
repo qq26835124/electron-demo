@@ -42,7 +42,7 @@ export default function Navigation(props){
             resizeHandle.removeEventListener('mousedown', mouseDown, false)
         };
     }, [])
-    
+
     return (
         <div className="navigation" ref={ref}>
             <div className="tools">
@@ -50,7 +50,9 @@ export default function Navigation(props){
             </div>
             <div className="explorer">
                 <p className="e-title">EXPLORER</p>
-                <Node {...props}/>
+                <div className="explorer-box">
+                    <Node {...props}/>
+                </div>
             </div>
             <div className="resize-handle"></div> {/* 鼠标拖拽手柄 */}
         </div>
